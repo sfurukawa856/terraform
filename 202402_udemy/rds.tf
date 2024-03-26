@@ -51,7 +51,7 @@ resource "random_string" "db_password" {
 }
 
 resource "aws_db_instance" "mysql_standalone" {
-	# 基本設定
+  # 基本設定
   engine         = "mysql"
   engine_version = "8.0.20"
 
@@ -59,8 +59,8 @@ resource "aws_db_instance" "mysql_standalone" {
   username   = "admin"
   password   = random_string.db_password.result
 
-	# ストレージ周り
-  instance_class = "db.t2.micro"
+  # ストレージ周り
+  instance_class        = "db.t2.micro"
   allocated_storage     = 20
   max_allocated_storage = 50
   storage_type          = "gp2"
@@ -74,7 +74,7 @@ resource "aws_db_instance" "mysql_standalone" {
   publicly_accessible    = false
   port                   = 3306
 
-	# DB設定
+  # DB設定
   name                 = "udemy-app"
   parameter_group_name = aws_db_parameter_group.mysql_standalone_parametergroup.name
   option_group_name    = aws_db_option_group.mysql_standalone_optiongroup.name
@@ -86,11 +86,11 @@ resource "aws_db_instance" "mysql_standalone" {
   auto_minor_version_upgrade = false
 
   # 削除周りの設定
-  deletion_protection = true # 削除防止するか
+  deletion_protection = true  # 削除防止するか
   skip_final_snapshot = false # 削除時のスナップショットをスキップするか
-  apply_immediately   = true # 変更内容をメンテナンス時にせず、すぐ実行するか
-	# 上記設定でRDSを削除できないようになっている。削除する場合は以下の設定を反映してからでないと削除できない
-	# deletion_protection = false
+  apply_immediately   = true  # 変更内容をメンテナンス時にせず、すぐ実行するか
+  # 上記設定でRDSを削除できないようになっている。削除する場合は以下の設定を反映してからでないと削除できない
+  # deletion_protection = false
   # skip_final_snapshot = true
   # apply_immediately   = true
 
