@@ -41,4 +41,7 @@ terraform.rc
 terraform_1.7.4_linux_amd64
 .vscode
 
+*.pem
+*.pub
+
 # End of https://www.toptal.com/developers/gitignore/api/terraform
