@@ -53,14 +53,14 @@ resource "random_string" "db_password" {
 resource "aws_db_instance" "mysql_standalone" {
   # 基本設定
   engine         = "mysql"
-  engine_version = "8.0.20"
+  engine_version = "8.0.35"
 
   identifier = "${var.project}-${var.environment}-mysql-standalone"
   username   = "admin"
   password   = random_string.db_password.result
 
   # ストレージ周り
-  instance_class        = "db.t2.micro"
+  instance_class        = "db.t3.micro"
   allocated_storage     = 20
   max_allocated_storage = 50
   storage_type          = "gp2"
@@ -75,7 +75,7 @@ resource "aws_db_instance" "mysql_standalone" {
   port                   = 3306
 
   # DB設定
-  name                 = "udemy-app"
+  name                 = "udemyAppTest01"
   parameter_group_name = aws_db_parameter_group.mysql_standalone_parametergroup.name
   option_group_name    = aws_db_option_group.mysql_standalone_optiongroup.name
 
