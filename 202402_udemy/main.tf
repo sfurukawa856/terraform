@@ -9,6 +9,12 @@ terraform {
       version = "~>3.0"
     }
   }
+  backend "s3" {
+    bucket  = "udemy-app-tfstate-bucket"
+    key     = "terraform.tfstate"
+    region  = "ap-northeast-1"
+    profile = "terraform"
+  }
 }
 
 # ------------------------------------
