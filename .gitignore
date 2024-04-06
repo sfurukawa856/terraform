@@ -44,4 +44,6 @@ terraform_1.7.4_linux_amd64
 *.pem
 *.pub
 
+*password*
+
 # End of https://www.toptal.com/developers/gitignore/api/terraform
