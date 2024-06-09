@@ -21,3 +21,5 @@ data "aws_ami" "app" {
     values = ["hvm"]
   }
 }
+
+data "aws_caller_identity" "self" {}
