@@ -86,13 +86,13 @@ resource "aws_db_instance" "mysql_standalone" {
   auto_minor_version_upgrade = false
 
   # 削除周りの設定
-  deletion_protection = true  # 削除防止するか
-  skip_final_snapshot = false # 削除時のスナップショットをスキップするか
-  apply_immediately   = true  # 変更内容をメンテナンス時にせず、すぐ実行するか
+  # deletion_protection = true  # 削除防止するか
+  # skip_final_snapshot = false # 削除時のスナップショットをスキップするか
+  # apply_immediately   = true  # 変更内容をメンテナンス時にせず、すぐ実行するか
   # 上記設定でRDSを削除できないようになっている。削除する場合は以下の設定を反映してからでないと削除できない
-  # deletion_protection = false
-  # skip_final_snapshot = true
-  # apply_immediately   = true
+  deletion_protection = false
+  skip_final_snapshot = true
+  apply_immediately   = true
 
   tags = {
     Name    = "${var.project}-${var.environment}-mysql-standalone"
