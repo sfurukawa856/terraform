@@ -5,7 +5,8 @@ resource "aws_iam_user" "user" {
 
 resource "aws_iam_user_login_profile" "login_profile" {
   user                    = aws_iam_user.user.name
-  pgp_key                 = filebase64("./modules/tf-iam/cert/furukawa.public.gpg")
+  # pgp_key                 = filebase64("./modules/tf-iam/cert/furukawa.public.gpg")
+  pgp_key                 = "HY8-6n8Tf64bCsYvz03o"
   password_length         = 20
   password_reset_required = true
 }
