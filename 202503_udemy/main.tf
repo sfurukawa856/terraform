@@ -6,5 +6,5 @@ module "network" {
   public_subnet_count  = 1
   private_subnet_count = 1
   vpc_cidr             = "10.0.0.0/16"
-  enable_nat_gateway   = false
+  enable_nat_gateway   = true
 }
