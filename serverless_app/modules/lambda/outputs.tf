@@ -1,3 +1,7 @@
 output "function_name" {
-  value = aws_lambda_function.example.tags_all.Name
+  value = aws_lambda_function.this.tags_all.Name
+}
+
+output "lambda_function_arn" {
+  value = aws_lambda_function.this.arn
 }

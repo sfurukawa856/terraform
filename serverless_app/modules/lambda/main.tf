@@ -1,6 +1,6 @@
 data "archive_file" "lambda_hello_world" {
   type        = "zip"
-  source_file  = "${path.module}/function/hello.js"
+  source_file = "${path.module}/function/hello.js"
   output_path = "${path.module}/function/hello.zip"
 }
 
@@ -13,7 +13,7 @@ resource "aws_s3_object" "lambda_hello_world" {
   etag = filemd5(data.archive_file.lambda_hello_world.output_path)
 }
 
-resource "aws_lambda_function" "example" {
+resource "aws_lambda_function" "this" {
   function_name = var.function_name
   role          = var.lambda_exec_arn
   handler       = "hello.handler"

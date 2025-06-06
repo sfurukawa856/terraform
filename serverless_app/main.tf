@@ -1,3 +1,6 @@
+# ------------------------------------
+# Bucket for Lambda
+# ------------------------------------
 resource "random_pet" "lambda_bucket_name" {
   prefix = "learn-terraform-functions"
   length = 4
@@ -21,16 +24,27 @@ resource "aws_s3_bucket_acl" "lambda_bucket" {
   acl    = "private"
 }
 
+# ------------------------------------
+# Lambda
+# ------------------------------------
 module "lambda" {
-  source = "./modules/lambda"
+  source           = "./modules/lambda"
   lambda_bucket_id = aws_s3_bucket.lambda_bucket.id
-  function_name = "hello-world-func"
-  lambda_exec_arn = aws_iam_role.lambda_exec.arn
+  function_name    = "hello-world-func"
+  lambda_exec_arn  = aws_iam_role.lambda_exec.arn
 }
 
+# ------------------------------------
+# CloudWatch Logs
+# ------------------------------------
 resource "aws_cloudwatch_log_group" "hello_world" {
-  name = "/aws/lambda/hello-world-func"
-  retention_in_days = 30
+  name              = "/aws/lambda/hello-world-func"
+  retention_in_days = 1
+}
+
+resource "aws_cloudwatch_log_group" "api_gw" {
+  name              = "/aws/api_gw/accesslogs"
+  retention_in_days = 1
 }
 
 resource "aws_iam_role" "lambda_exec" {
@@ -57,5 +71,18 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 
 output "function_name" {
   description = "Name of the Lambda function."
-  value = module.lambda.function_name
+  value       = module.lambda.function_name
+}
+
+module "apigateway" {
+  source               = "./modules/apigateway"
+  api_name             = "my-api"
+  cloudwatchlogs_arn   = aws_cloudwatch_log_group.api_gw.arn
+  lambda_arn           = module.lambda.lambda_function_arn
+  lambda_function_name = module.lambda.function_name
+}
+
+output "base_url" {
+  description = "Base URL for API Gateway stage."
+  value = module.apigateway.invoke_url
 }
